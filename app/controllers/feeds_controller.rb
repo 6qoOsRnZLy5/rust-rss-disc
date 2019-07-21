@@ -6,6 +6,7 @@ require 'httparty'
 
 class Feedjira::Parser::RSSEntry
   element "guid", as: :guid
+  element "description", as: :description
 end
 
 class FeedsController < ApplicationController
