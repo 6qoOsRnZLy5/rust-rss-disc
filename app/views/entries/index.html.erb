@@ -19,7 +19,7 @@
   <tbody>
     <% @entries.each do |entry| %>
       <tr>
-        <td><%= link_to feed_entry_path(@feed, entry) %></td>
+        <td><%= link_to @feed.title, feed_entry_path(@feed, entry) %></td>
         <td><%= entry.title %></td>
         <td><%= entry.description %></td>
         <td><%= entry.picture %></td>
@@ -35,5 +35,7 @@
 </table>
 
 <br>
+
+<%= link_to 'To Feed', feed_path(@feed) %>
 
 <%= link_to 'New Entry', new_feed_entry_path(@feed) %>
