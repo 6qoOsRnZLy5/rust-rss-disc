@@ -5,6 +5,6 @@ Rails.application.routes.draw do
     resources :entries
   end
 
-  get 'refresh' to: 'feeds#refresh'
+  get '/refresh', to: 'feeds#refresh'
 
 end
