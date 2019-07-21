@@ -1,5 +1,9 @@
+require 'rufus-scheduler'
+require 'uri'
+require 'feedjira'
+
 class FeedsController < ApplicationController
-  before_action :set_feed, only: [:show, :edit, :update, :destroy]
+  before_action :set_feed, only: [:show, :edit, :update, :destroy, :refresh]
 
   def index
     @feeds = Feed.all
@@ -37,6 +41,31 @@ class FeedsController < ApplicationController
     if @feed.destroy
       redirect_to feeds_url, notice: 'Feed was successfully destroyed.'
     end
+  end
+
+  def refresh
+
+    Feed.all.each do |feed|
+      if feed.pullurl
+        if feed.pullurl =~ URI::regexp
+          message =+ "start syncing #{feed.title}"
+          content = Feedjira::Feed.fetch_and_parse feed.pullurl
+          content.entries.each do |entry|
+            local_entry = feed.entries.where(guid: entry.guid).first_or_initialize
+            local_entry.update_attributes(
+              description: entry.description, 
+              title: entry.title)
+            message =+ "Synced Entry - #{entry.title}"
+          end
+          message =+ "done syncing #{feed.title}"
+        else
+          message =+ "skipping #{feed.title}, pullurl is not an url"
+        end
+      else
+        message =+ "skipping #{feed.title}, no pullurl"
+      end
+    end
+
   end
 
   private
