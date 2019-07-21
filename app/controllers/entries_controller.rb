@@ -1,5 +1,7 @@
 class EntriesController < ApplicationController
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_feed
+
 
   def index
     @entries = Entry.all
@@ -19,7 +21,7 @@ class EntriesController < ApplicationController
     @entry = Entry.new(entry_params)
 
     if @entry.save
-      redirect_to feed_entry_path(@entry.feed, @entry), notice: 'Entry was successfully created.'
+      redirect_to feed_entry_path(@feed, @entry), notice: 'Entry was successfully created.'
     else
       render :new 
     end
@@ -27,16 +29,15 @@ class EntriesController < ApplicationController
 
   def update
     if @entry.update(entry_params)
-      redirect_to feed_entry_path(@entry.feed, @entry), notice: 'Entry was successfully updated.'
+      redirect_to feed_entry_path(@feed, @entry), notice: 'Entry was successfully updated.'
     else
       render :edit
     end
   end
 
   def destroy
-    feed = @entry.feed
     if @entry.destroy
-      redirect_to feed_entries_url(feed), notice: 'Entry was successfully destroyed.'
+      redirect_to feed_entries_url(@feed), notice: 'Entry was successfully destroyed.'
     end
   end
 
@@ -46,8 +47,12 @@ class EntriesController < ApplicationController
       @entry = Entry.find(params[:id])
     end
 
+    def set_feed
+      @feed = Feed.find(params[:feed_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def entry_params
-      params.require(:entry).permit(:feed_id, :title, :description, :picture, :link1, :link2, :guid)
+      params.require(:entry).permit(:feed, :feed_id, :title, :description, :picture, :link1, :link2, :guid)
     end
 end

@@ -1,5 +1,5 @@
 <h1>New Entry</h1>
 
-<%= render 'form', entry: @entry %>
+<%= render 'form', entry: @entry, feed: @feed %>
 
-<%= link_to 'Back', feed_entries_path(@entry.feed) %>
+<%= link_to 'Back', feed_entries_path(@feed) %>
