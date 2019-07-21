@@ -5,8 +5,10 @@ Rails.application.configure do
   config.cache_classes = true
 
   config.web_console.permissions = '172.0.0.0/255.255.0.0'
+  config.web_console.whitelisted_ips = '172.0.0.0/255.255.0.0'
   config.rvt.whitelisted_ips = '172.0.0.0/255.255.0.0'
   config.web_console.development_only = false
+  config.web_console.whiny_requests = false
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
