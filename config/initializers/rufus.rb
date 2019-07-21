@@ -1,6 +1,6 @@
 require 'rufus-scheduler'
 require 'rake'
-load File.join(RAILS_ROOT, 'lib', 'tasks', 'feed_importer.rake')
+load File.join('..', '..', 'lib', 'tasks', 'feed_importer.rake')
 
 
 if ENV["OC_DEPLOYMENT"] == "YES"
