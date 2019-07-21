@@ -62,7 +62,8 @@ class FeedsController < ApplicationController
             local_entry = feed.entries.where(guid: entry.guid).first_or_initialize
             local_entry.update_attributes(
               description: entry.description, 
-              title: entry.title)
+              title: entry.title,
+              feed: @feed)
             @message << " --- Synced Entry - #{entry.title}"
           end
           @message << " --- done syncing #{feed.title}"
