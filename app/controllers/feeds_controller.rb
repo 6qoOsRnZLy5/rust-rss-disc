@@ -1,6 +1,7 @@
 require 'rufus-scheduler'
 require 'uri'
 require 'feedjira'
+require 'httparty'
 
 class FeedsController < ApplicationController
   before_action :set_feed, only: [:show, :edit, :update, :destroy ]
@@ -49,7 +50,8 @@ class FeedsController < ApplicationController
       if feed.pullurl
         if feed.pullurl =~ URI::regexp
           @message << "start syncing #{feed.title}"
-          content = Feedjira::Feed.fetch_and_parse feed.pullurl
+          xml = HTTParty.get(feed.pullurl).body
+          content = Feedjira.parse(xml)
           content.entries.each do |entry|
             local_entry = feed.entries.where(guid: entry.guid).first_or_initialize
             local_entry.update_attributes(
