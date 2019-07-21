@@ -60,7 +60,9 @@ class FeedsController < ApplicationController
               feed: @feed)
               local_entry.save
               if local_entry.errors.any?
-                @message << local_entry.errors
+                local_entry.errors.each do |e|
+                  @message << e.to_s
+                end
               end
             @message << " --- Synced Entry - #{entry.title} <br>"
           end
