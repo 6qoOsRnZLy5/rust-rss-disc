@@ -55,7 +55,7 @@ class FeedsController < ApplicationController
     Feed.all.each do |feed|
       if feed.pullurl
         if feed.pullurl =~ URI::regexp
-          @message << "start syncing #{feed.title}"
+          @message << "start syncing #{feed.title} <br>"
           xml = HTTParty.get(feed.pullurl).body
           content = Feedjira.parse(xml)
           content.entries.each do |entry|
@@ -64,14 +64,14 @@ class FeedsController < ApplicationController
               description: entry.description, 
               title: entry.title,
               feed: @feed)
-            @message << " --- Synced Entry - #{entry.title}"
+            @message << " --- Synced Entry - #{entry.title} <br>"
           end
-          @message << " --- done syncing #{feed.title}"
+          @message << " --- done syncing #{feed.title} <br>"
         else
-          @message << " --- skipping #{feed.title}, pullurl is not an url"
+          @message << " --- skipping #{feed.title}, pullurl is not an url <br>"
         end
       else
-        @message << " --- skipping #{feed.title}, no pullurl"
+        @message << " --- skipping #{feed.title}, no pullurl <br>"
       end
     end
     console
