@@ -11,10 +11,8 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :feed_id %>
-    <%= form.text_field :feed_id %>
-  </div>
+
+  <%= form.hidden_field :feed_id, :value => entry.feed.id %>
 
   <div class="field">
     <%= form.label :title %>

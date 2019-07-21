@@ -35,5 +35,5 @@
   <%= @entry.guid %>
 </p>
 
-<%= link_to 'Edit', edit_entry_path(@entry) %> |
-<%= link_to 'Back', entries_path %>
+<%= link_to 'Edit', edit_feed_entry_path(@entry.feed, @entry) %> |
+<%= link_to 'Back', feed_entries_path(@entry.feed) %>
