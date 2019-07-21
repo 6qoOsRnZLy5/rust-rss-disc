@@ -9,7 +9,7 @@ class EntriesController < ApplicationController
   end
 
   def new
-    @entry = Entry.new feed: Feed.find_by_id params[:feed_id]
+    @entry = Entry.new
   end
 
   def edit
