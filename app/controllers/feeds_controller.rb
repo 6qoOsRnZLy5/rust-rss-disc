@@ -2,7 +2,11 @@ require 'rufus-scheduler'
 require 'uri'
 require 'feedjira'
 require 'httparty'
-Feedjira::Feed.add_common_feed_element("guid")
+#Feedjira::Feed.add_common_feed_element("guid")
+
+class Feedjira::Parser::RSSEntry
+  element "guid", as: :guid
+end
 
 class FeedsController < ApplicationController
   before_action :set_feed, only: [:show, :edit, :update, :destroy ]
