@@ -58,6 +58,10 @@ class FeedsController < ApplicationController
               description: entry.summary, 
               title: entry.title,
               feed: @feed)
+              local_entry.save
+              if local_entry.errors.any?
+                @message << local_entry.errors
+              end
             @message << " --- Synced Entry - #{entry.title} <br>"
           end
           @message << " --- done syncing #{feed.title} <br>"
