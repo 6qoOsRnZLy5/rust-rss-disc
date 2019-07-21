@@ -56,7 +56,7 @@ class FeedsController < ApplicationController
             local_entry = feed.entries.where(guid: entry.entry_id).first_or_initialize
             local_entry.description = entry.summary
             local_entry.title = entry.title
-            local_entry.feed: @feed
+            local_entry.feed = @feed
             local_entry.save
               if local_entry.errors.any?
                 local_entry.errors.each do |e|
