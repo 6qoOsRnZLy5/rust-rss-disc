@@ -1,9 +1,10 @@
 require 'rufus-scheduler'
 require 'rake'
-load File.join('..', '..', 'lib', 'tasks', 'feed_importer.rake')
+
 
 
 if ENV["OC_DEPLOYMENT"] == "YES"
+  load File.join('lib', 'tasks', 'feed_importer.rake')
 
   scheduler = Rufus::Scheduler.new
 
