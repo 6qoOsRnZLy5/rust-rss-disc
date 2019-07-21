@@ -18,7 +18,11 @@ namespace :feed_importer do
             puts "Synced Entry - #{entry.title}"
           end
           puts "done syncing #{feed.title}"
+        else
+          puts "skipping #{feed.title}, pullurl is not an url"
         end
+      else
+        puts "skipping #{feed.title}, no pullurl"
       end
     end  
   end
