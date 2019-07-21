@@ -46,7 +46,7 @@ class FeedsController < ApplicationController
 
   def refresh
     @message = String.new
-    Feed.all.each do |feed|
+    Feed.all.each do | feed |
       if feed.pullurl
         if feed.pullurl =~ URI::regexp
           @message << "start syncing #{feed.title} <br>"
@@ -54,11 +54,10 @@ class FeedsController < ApplicationController
           content = Feedjira.parse(xml)
           content.entries.each do |entry|
             local_entry = feed.entries.where(guid: entry.entry_id).first_or_initialize
-            local_entry.update_attributes(
-              description: entry.summary, 
-              title: entry.title,
-              feed: @feed)
-              local_entry.save
+            local_entry.description = entry.summary
+            local_entry.title = entry.title
+            local_entry.feed: @feed
+            local_entry.save
               if local_entry.errors.any?
                 local_entry.errors.each do |e|
                   @message << e.to_s
