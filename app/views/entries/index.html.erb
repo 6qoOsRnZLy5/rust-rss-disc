@@ -26,9 +26,9 @@
         <td><%= entry.link1 %></td>
         <td><%= entry.link2 %></td>
         <td><%= entry.guid %></td>
-        <td><%= link_to 'Show', entry %></td>
-        <td><%= link_to 'Edit', edit_entry_path(entry) %></td>
-        <td><%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', feed_entry_path(entry.feed, entry) %></td>
+        <td><%= link_to 'Edit', edit_feed_entry_path(entry.feed, entry) %></td>
+        <td><%= link_to 'Destroy', feed_entry_path(entry.feed, entry), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -36,4 +36,4 @@
 
 <br>
 
-<%= link_to 'New Entry', new_entry_path %>
+<%= link_to 'New Entry', new_feed_entry_path %>
