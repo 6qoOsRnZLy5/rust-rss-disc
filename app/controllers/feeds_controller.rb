@@ -74,7 +74,7 @@ class FeedsController < ApplicationController
         @message << " --- skipping #{feed.title}, no pullurl"
       end
     end
-
+    console
   end
 
   private
