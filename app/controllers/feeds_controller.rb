@@ -3,7 +3,7 @@ require 'uri'
 require 'feedjira'
 
 class FeedsController < ApplicationController
-  before_action :set_feed, only: [:show, :edit, :update, :destroy, :refresh]
+  before_action :set_feed, only: [:show, :edit, :update, :destroy ]
 
   def index
     @feeds = Feed.all
