@@ -47,6 +47,7 @@ gem 'rufus-scheduler'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'web-console', '>= 3.3.0'
+gem 'rvt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

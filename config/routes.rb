@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   get '/refresh', to: 'feeds#refresh'
 
+  mount RVT::Engine => '/debug'
 end

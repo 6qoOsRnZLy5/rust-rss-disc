@@ -5,6 +5,7 @@ Rails.application.configure do
   config.cache_classes = true
 
   config.web_console.permissions = '172.19.0.0/16'
+  config.rvt.whitelisted_ips = '172.19.0.0/16'
   config.web_console.development_only = false
 
   # Eager load code on boot. This eager loads most of Rails and
