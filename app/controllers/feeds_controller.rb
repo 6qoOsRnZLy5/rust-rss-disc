@@ -44,25 +44,25 @@ class FeedsController < ApplicationController
   end
 
   def refresh
-
+    @message = String.new
     Feed.all.each do |feed|
       if feed.pullurl
         if feed.pullurl =~ URI::regexp
-          @message = "start syncing #{feed.title}"
+          @message << "start syncing #{feed.title}"
           content = Feedjira::Feed.fetch_and_parse feed.pullurl
           content.entries.each do |entry|
             local_entry = feed.entries.where(guid: entry.guid).first_or_initialize
             local_entry.update_attributes(
               description: entry.description, 
               title: entry.title)
-            @message += " --- Synced Entry - #{entry.title}"
+            @message << " --- Synced Entry - #{entry.title}"
           end
-          @message += " --- done syncing #{feed.title}"
+          @message << " --- done syncing #{feed.title}"
         else
-          @message += " --- skipping #{feed.title}, pullurl is not an url"
+          @message << " --- skipping #{feed.title}, pullurl is not an url"
         end
       else
-        @message += " --- skipping #{feed.title}, no pullurl"
+        @message << " --- skipping #{feed.title}, no pullurl"
       end
     end
 
