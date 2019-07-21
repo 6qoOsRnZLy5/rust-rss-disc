@@ -3,8 +3,8 @@ if ENV["OC_DEPLOYMENT"] == "YES"
 
   scheduler = Rufus::Scheduler.new
 
-  scheduler.interval '1s' do
-    Logger.debug "I assure you! It's #{Time.now}"
+  scheduler.interval '1m' do
+    puts "I assure you! It's #{Time.now}"
   end
 
   scheduler.join
