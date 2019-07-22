@@ -10,7 +10,7 @@ class Entry < ApplicationRecord
 
   def send_to_discord
     fragment = Nokogiri::HTML.fragment(description)
-    img = fragment.at('img')['src']
+    img = fragment.at('img').attr('src')
     fragment = fragment.search('.//a').remove
     fragment = fragment.search('.//span').remove
     f = fragment.to_html
