@@ -10,19 +10,19 @@ class Entry < ApplicationRecord
 
   def send_to_discord
     fragment = Nokogiri::HTML.fragment(description)
-    #img = fragment.at('img').attr('src')
-    fragment = fragment.search('.//a').remove
-    fragment = fragment.search('.//span').remove
+    img = fragment.css('img').first.attr('src')
+    f1 = fragment.search('.//a').each {|x| x.remove}
+    f2 = fragment.search('.//span').each {|x| x.remove}
     f = fragment.to_html
     k = Kramdown::Document.new(f, :input => 'html').to_kramdown
-    #emb = { thumbnail: { url: img } }
+    embedds = { thumbnail: { url: img } }
     webhook = ENV['DISCORD_REMOTE']
     conn = Faraday.new(
          url: webhook,
          headers: {'Content-Type' => 'application/json'}
     )
     resp = conn.post do |req|
-      req.body = { username: "plebbot", content: k }.to_json
+      req.body = { username: "plebbot", content: k, embeds: embedds }.to_json
     end
   end
 
