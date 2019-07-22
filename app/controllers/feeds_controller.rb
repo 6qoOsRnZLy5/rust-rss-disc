@@ -52,11 +52,11 @@ class FeedsController < ApplicationController
           @message << "start syncing #{feed.title} <br>"
           xml = HTTParty.get(feed.pullurl).body
           content = Feedjira.parse(xml)
-          content.entries.each do |entry|
+          content.entries.each do | remote_entry |
             local_entry = feed.entries.where(link1: entry.entry_id).first_or_initialize
             local_entry.description = entry.summary
             local_entry.title = entry.title
-            local_entry.feed = @feed
+            local_entry.feed = feed
             local_entry.save!
               if local_entry.errors.any?
                 local_entry.errors.each do |e|
