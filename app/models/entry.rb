@@ -11,8 +11,8 @@ class Entry < ApplicationRecord
   def send_to_discord
     fragment = Nokogiri::HTML.fragment(description)
     img = fragment.css('img').first.attr('src')
-    f1 = fragment.search('.//a').each {|x| x.remove}
-    f2 = fragment.search('.//span').each {|x| x.remove}
+    fragment.search('.//a').each {|x| x.remove}
+    fragment.search('.//span').each {|x| x.remove}
     f = fragment.to_html
     k = Kramdown::Document.new(f, :input => 'html').to_kramdown
     embedds = [ { thumbnail: { url: img } } ]
