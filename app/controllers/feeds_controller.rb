@@ -53,9 +53,9 @@ class FeedsController < ApplicationController
           xml = HTTParty.get(feed.pullurl).body
           content = Feedjira.parse(xml)
           content.entries.each do | remote_entry |
-            local_entry = feed.entries.where(link1: entry.entry_id).first_or_initialize
-            local_entry.description = entry.summary
-            local_entry.title = entry.title
+            local_entry = feed.entries.where(link1: remote_entry.entry_id).first_or_initialize
+            local_entry.description = remote_entry.summary
+            local_entry.title = remote_entry.title
             local_entry.feed = feed
             local_entry.save!
               if local_entry.errors.any?
@@ -63,7 +63,7 @@ class FeedsController < ApplicationController
                   @message << e.to_s
                 end
               end
-            @message << " --- Synced Entry - #{entry.title} <br>"
+            @message << " --- Synced Entry - #{remote_entry.title} <br>"
           end
           @message << " --- done syncing #{feed.title} <br>"
         else
