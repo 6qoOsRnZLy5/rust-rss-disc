@@ -1,5 +1,4 @@
 require 'kramdown'
-webhook = ENV['DISCORD_REMOTE']
 
 class Entry < ApplicationRecord
   belongs_to :feed
@@ -9,6 +8,7 @@ class Entry < ApplicationRecord
   end
 
   def send_to_discord
+    webhook = ENV['DISCORD_REMOTE']
     conn = Faraday.new(
          url: webhook,
          headers: {'Content-Type' => 'application/json'}
