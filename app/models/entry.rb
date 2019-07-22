@@ -8,7 +8,7 @@ class Entry < ApplicationRecord
     Kramdown::Document.new(description).to_kramdown
   end
 
-  def send
+  def send_to_discord
     conn = Faraday.new(
          url: webhook,
          headers: {'Content-Type' => 'application/json'}
