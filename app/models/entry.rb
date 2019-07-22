@@ -15,14 +15,14 @@ class Entry < ApplicationRecord
     f2 = fragment.search('.//span').each {|x| x.remove}
     f = fragment.to_html
     k = Kramdown::Document.new(f, :input => 'html').to_kramdown
-    embedds = { thumbnail: { url: img } }
+    embedds = [ { thumbnail: { url: img } } ]
     webhook = ENV['DISCORD_REMOTE']
     conn = Faraday.new(
          url: webhook,
          headers: {'Content-Type' => 'application/json'}
     )
     resp = conn.post do |req|
-      req.body = { username: "plebbot", content: k }.to_json
+      req.body = { username: "plebbot", content: k, embeds: embedds }.to_json
     end
   end
 
