@@ -4,7 +4,7 @@ require 'nokogiri'
 class Entry < ApplicationRecord
   belongs_to :feed
 
-  description_to_kramdown
+  def description_to_kramdown
     Kramdown::Document.new(description, :input => 'html').to_kramdown
   end
 
