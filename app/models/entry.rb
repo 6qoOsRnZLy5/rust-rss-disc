@@ -13,7 +13,8 @@ class Entry < ApplicationRecord
     img = fragment.at('img')['src']
     fragment = fragment.search('.//a').remove
     fragment = fragment.search('.//span').remove
-    k = Kramdown::Document.new(fragment, :input => 'html').to_kramdown
+    f = fragment.to_html
+    k = Kramdown::Document.new(f, :input => 'html').to_kramdown
     emb = { thumbnail: { url: img } }
     webhook = ENV['DISCORD_REMOTE']
     conn = Faraday.new(
