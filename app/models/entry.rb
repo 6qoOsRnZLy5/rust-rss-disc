@@ -22,7 +22,7 @@ class Entry < ApplicationRecord
          headers: {'Content-Type' => 'application/json'}
     )
     resp = conn.post do |req|
-      req.body = { username: "plebbot", content: k, embeds: embedds }.to_json
+      req.body = { username: "plebbot", content: k }.to_json
     end
   end
 
