@@ -11,8 +11,8 @@ class Entry < ApplicationRecord
   def send_to_discord
     fragment = Nokogiri::HTML.fragment(description)
     img = fragment.at('img')['src']
-    fragment = fragment.at('a').delete
-    fragment = fragment.at('span').delete
+    fragment = fragment.search('.//a').delete
+    fragment = fragment.search('.//span').delete
     k = Kramdown::Document.new(fragment, :input => 'html').to_kramdown
     emb = { thumbnail: { url: img } }
     webhook = ENV['DISCORD_REMOTE']
