@@ -53,7 +53,7 @@ class FeedsController < ApplicationController
           xml = HTTParty.get(feed.pullurl).body
           content = Feedjira.parse(xml)
           content.entries.each do |entry|
-            local_entry = feed.entries.where(url1: entry.entry_id).first_or_initialize
+            local_entry = feed.entries.where(link1: entry.entry_id).first_or_initialize
             local_entry.description = entry.summary
             local_entry.title = entry.title
             local_entry.feed = @feed
