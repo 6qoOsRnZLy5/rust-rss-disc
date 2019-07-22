@@ -15,7 +15,7 @@ class Entry < ApplicationRecord
     fragment.search('.//span').each {|x| x.remove}
     f = fragment.to_html
     k = Kramdown::Document.new(f, :input => 'html').to_kramdown
-    embedds = [ { thumbnail: { url: img } } ]
+    embedds = [ { title: "View this news", url: link1 }, { thumbnail: { url: img } } ]
     webhook = ENV['DISCORD_REMOTE']
     conn = Faraday.new(
          url: webhook,
