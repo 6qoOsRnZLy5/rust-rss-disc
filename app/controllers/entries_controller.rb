@@ -41,7 +41,7 @@ class EntriesController < ApplicationController
     end
   end
 
-  def published
+  def publish
     @entries = Entry.where(status: 1)
     if @entries
       @entries.each do | e |
