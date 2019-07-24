@@ -41,6 +41,17 @@ class EntriesController < ApplicationController
     end
   end
 
+  def published
+    @entries = Entry.where(status: 1)
+    if @entries
+      @entries.each do | e |
+        e.send_to_discord
+        e.status = 2
+        e.save!
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_entry

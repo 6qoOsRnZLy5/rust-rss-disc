@@ -30,7 +30,6 @@ class Entry < ApplicationRecord
     embededes = { title: title, url: link1, description: k, color: color, fields: ffields, thumbnail: thumbe, image: imagee }
     embededs = [ embededes ]
 
-    #embedds = [ { title: "View this news", url: link1 }, { thumbnail: { url: img } } ]
     webhook = ENV['DISCORD_REMOTE']
     conn = Faraday.new(
          url: webhook,

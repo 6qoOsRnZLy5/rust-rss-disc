@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   end
 
   get '/refresh', to: 'feeds#refresh'
+  get '/publish', to: 'entries#publish'
 
-  mount RVT::Engine => '/debug'
 end

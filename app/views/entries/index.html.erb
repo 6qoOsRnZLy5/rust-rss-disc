@@ -12,6 +12,7 @@
       <th>Link1</th>
       <th>Link2</th>
       <th>Guid</th>
+      <th>Status</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -26,6 +27,7 @@
         <td><%= entry.link1 %></td>
         <td><%= entry.link2 %></td>
         <td><%= entry.guid %></td>
+        <td><%= entry.status %></td>
         <td><%= link_to 'Show', feed_entry_path(@feed, entry) %></td>
         <td><%= link_to 'Edit', edit_feed_entry_path(@feed, entry) %></td>
         <td><%= link_to 'Destroy', feed_entry_path(@feed, entry), method: :delete, data: { confirm: 'Are you sure?' } %></td>
