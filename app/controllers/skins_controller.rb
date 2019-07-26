@@ -44,9 +44,8 @@ class SkinsController < ApplicationController
     @skins = Skin.where(status: 1)
     if @skins
       @skins.each do | s |
-        s.send_to_discord
-	s.status = 2
-	s.save!
+	s.status = 2 if s.send_to_discord
+	sleep 2 if s.save!
       end
     end
   end
