@@ -1,0 +1,87 @@
+require 'faraday'
+require 'httparty'
+require 'nokogiri'
+require 'json'
+
+SHOP_API_URL = 'https://api.steampowered.com/ISteamEconomy/GetAssetPrices/v1/'
+app = "252490"
+apikey = ENV["STEAM_API_KEY"]
+resp = Faraday.get(SHOP_API_URL, {key: apikey, appid: app}, {'Accept' => 'application/json'})
+j = JSON.parse(resp.body)
+prices = Hash.new
+j["result"]["assets"].each do |item|
+  itemid = item["name"].to_s
+  prices[itemid] = Hash.new
+  rappen = item["prices"]["CHF"]
+  prices[itemid]["CHF"] = rappen.to_s.insert(-3, ".")
+  uscent = item["prices"]["USD"]
+  prices[itemid]["USD"] = uscent.to_s.insert(-3, ".")
+  eucent = item["prices"]["EUR"]
+  prices[itemid]["EUR"] = eucent.to_s.insert(-3, ".")
+  aucent = item["prices"]["AUD"]
+  prices[itemid]["AUD"] = aucent.to_s.insert(-3, ".")
+end
+
+SHOP_URL = "https://store.steampowered.com/itemstore/252490/browse/?filter=All"
+response = HTTParty.get SHOP_URL
+document = Nokogiri::HTML(response.body)
+items = document.at('#ItemDefsRows')
+myitems = Hash.new
+items.search('.item_def_grid_item').each do |item|
+  link = item.at('.item_def_icon_container/a').attr('href')
+  id = link.match(/https:\/\/store.steampowered.com\/itemstore\/252490\/detail\/(?<id>\d+)\//)[:id]
+  picture = item.at('.item_def_icon_container/a/img').attr('src')
+  picture << ".png"
+  name = item.at('.item_def_name/a').text
+  name.strip!
+  price = item.at('.item_def_price').text
+  price.strip!
+  myitems[id] = Hash.new
+  myitems[id]["id"] = id
+  myitems[id]["url"] = link
+  myitems[id]["img"] = picture
+  myitems[id]["name"] = name
+  myitems[id]["prices"] = prices[id]
+end
+
+puts "----------------------------------------"
+puts myitems.inspect
+puts "----------------------------------------"
+puts myitems.first.inspect
+puts "----------------------------------------"
+
+
+def item_to_emb(i)
+  { title: "#{i["name"]}",
+    url: "#{i["url"]}",
+    description: "New Skin Released: #{i["name"]}, ID #{i["id"]}",
+    color: 2724948,
+    fields: [
+      { name: "Price CHF", value: "#{i["prices"]["CHF"]}", inline: true},
+      { name: "Price EUR", value: "#{i["prices"]["EUR"]}", inline: true},
+      { name: "Price AUD", value: "#{i["prices"]["AUD"]}", inline: true},
+      { name: "Price USD", value: "#{i["prices"]["USD"]}", inline: true}
+    ],
+    thumbnail: {
+      url: "#{i["img"]}"
+    }
+  }
+end
+
+postcontent = Array.new
+myitems.each do | i, v |
+  c = item_to_emb(v)
+  postcontent.push(c)
+end
+
+postbody = { embeds: postcontent }
+DISCORD = ENV["DISCORD_SKINS_CHANNEL_HOOK"]
+
+conn = Faraday.new(
+  url: DISCORD,
+  headers: {'Content-Type' => 'application/json'}
+)
+
+resp = conn.post do |req|
+  req.body = postbody.to_json
+end
