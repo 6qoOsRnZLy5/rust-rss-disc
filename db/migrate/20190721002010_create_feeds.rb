@@ -3,7 +3,6 @@ class CreateFeeds < ActiveRecord::Migration[5.2]
     create_table :feeds do |t|
       t.string :title
       t.string :pullurl
-      t.string :gameid
 
       t.timestamps
     end
