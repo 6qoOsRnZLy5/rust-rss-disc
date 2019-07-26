@@ -4,6 +4,9 @@ require 'nokogiri'
 class Entry < ApplicationRecord
   belongs_to :feed
 
+  ROLE_MENTION = ENV["NOTIFY_NEWS_ROLE"]
+  DISCORD_REMOTE = ENV['DISCORD_REMOTE']
+
   def description_to_kramdown
     Kramdown::Document.new(description, :input => 'html').to_kramdown
   end
@@ -30,9 +33,8 @@ class Entry < ApplicationRecord
     embededes = { title: title, url: link1, description: k, color: color, fields: ffields, thumbnail: thumbe, image: imagee }
     embededs = [ embededes ]
 
-    webhook = ENV['DISCORD_REMOTE']
     conn = Faraday.new(
-         url: webhook,
+         url: DISCORD_REMOTE,
          headers: {'Content-Type' => 'application/json'}
     )
     resp = conn.post do |req|

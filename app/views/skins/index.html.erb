@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Skins</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Feed</th>
+      <th>Gameid</th>
+      <th>Skinid</th>
+      <th>Status</th>
+      <th>Steamlink</th>
+      <th>Steampic</th>
+      <th>Name</th>
+      <th>Price chf</th>
+      <th>Price eur</th>
+      <th>Price usd</th>
+      <th>Price aud</th>
+      <th>Price eur</th>
+      <th>Created</th>
+      <th>Updated</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @skins.each do |skin| %>
+      <tr>
+        <td><%= link_to @feed.title, feed_path(@feed) %></td>
+        <td><%= skin.gameid %></td>
+        <td><%= skin.skinid %></td>
+        <td><%= skin.status %></td>
+        <td><%= skin.steamlink %></td>
+        <td><%= skin.steampic %></td>
+        <td><%= skin.name %></td>
+        <td><%= skin.price_chf %></td>
+        <td><%= skin.price_eur %></td>
+        <td><%= skin.price_usd %></td>
+        <td><%= skin.price_aud %></td>
+        <td><%= skin.price_eur %></td>
+        <td><%= skin.created_at %></td>
+        <td><%= skin.updated_at %></td>
+        <td><%= link_to 'Show', skin %></td>
+        <td><%= link_to 'Edit', edit_skin_path(skin) %></td>
+        <td><%= link_to 'Destroy', skin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<%= link_to 'New Skin', new_feed_skin_path(@feed) %>

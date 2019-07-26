@@ -10,7 +10,13 @@
   <%= @feed.pullurl %>
 </p>
 
-   <%= link_to 'Show entries', feed_entries_path(@feed) %>
+<p>
+  <strong>Gameid:</strong>
+  <%= @feed.gameid %>
+</p>
 
-<%= link_to 'Edit', edit_feed_path(@feed) %> |
-<%= link_to 'Back', feeds_path %>
+<p> <%= link_to 'Show entries', feed_entries_path(@feed) %>
+  | <%= link_to 'Show skins', feed_skins_path(@feed) %> </p>
+
+<p> <%= link_to 'Edit', edit_feed_path(@feed) %>
+  | <%= link_to 'Back', feeds_path %> <p>

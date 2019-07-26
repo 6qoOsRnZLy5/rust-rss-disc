@@ -3,9 +3,12 @@ Rails.application.routes.draw do
 
   resources :feeds do
     resources :entries
+    resources :skins
   end
 
-  get '/refresh', to: 'feeds#refresh'
-  get '/publish', to: 'entries#publish'
+  get '/refresh_news', to: 'feeds#refresh_news'
+  get '/refresh_skins', to: 'feeds#refresh_skins'
+  get '/publish_news', to: 'entries#publish'
+  get '/publish_skins', to: 'skins#publish'
 
 end

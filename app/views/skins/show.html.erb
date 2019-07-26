@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Feed:</strong>
+  <%= link_to feed_entry_path(@feed, @entry) %>
+</p>
+
+<p>
+  <strong>Gameid:</strong>
+  <%= @skin.gameid %>
+</p>
+
+<p>
+  <strong>Skinid:</strong>
+  <%= @skin.skinid %>
+</p>
+
+<p>
+  <strong>Steamlink:</strong>
+  <%= @skin.steamlink %>
+</p>
+
+<p>
+  <strong>Steampic:</strong>
+  <%= @skin.steampic %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @skin.name %>
+</p>
+
+<p>
+  <strong>Price chf:</strong>
+  <%= @skin.price_chf %>
+</p>
+
+<p>
+  <strong>Price eur:</strong>
+  <%= @skin.price_eur %>
+</p>
+
+<p>
+  <strong>Price usd:</strong>
+  <%= @skin.price_usd %>
+</p>
+
+<p>
+  <strong>Price aud:</strong>
+  <%= @skin.price_aud %>
+</p>
+
+<p>
+  <strong>Price eur:</strong>
+  <%= @skin.price_eur %>
+</p>
+
+<%= link_to 'Edit', edit_feed_skin_path(@feed, @skin) %> |
+<%= link_to 'Back', feed_skins_path(@feed) %>

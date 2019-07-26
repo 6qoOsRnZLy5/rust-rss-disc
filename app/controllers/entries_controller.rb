@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
 
 
   def index
-    @entries = Entry.all
+    @entries = @feed.entries
   end
 
   def show
